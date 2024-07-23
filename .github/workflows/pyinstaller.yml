@@ -1,0 +1,60 @@
+name: pyinstaller
+on:
+  push:
+    branches: ["main"]
+    paths-ignore:
+      - .*
+      - .*/**
+      - demos/**
+      - docs/**
+      - .git*
+      - CONTRIBUTING.md
+      - LICENSE
+      - README.md
+      - "!.github/workflows/pyinstaller.yml"
+  pull_request:
+    paths-ignore:
+      - .*
+      - .*/**
+      - demos/**
+      - docs/**
+      - .git*
+      - CONTRIBUTING.md
+      - LICENSE
+      - README.md
+      - "!.github/workflows/pyinstaller.yml"
+  workflow_call:
+concurrency:
+  # When run via `workflow_call` the `github.workflow` and `github.ref` are the
+  # same as the parent so we need a differentiation suffix.
+  group: ${{ github.workflow }}-${{ github.ref }}-pyinstaller
+  cancel-in-progress: true
+jobs:
+  pyinstaller:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/#platform-tag
+          # https://pypi.org/project/pyinstaller/#files
+          - { os: ubuntu-20.04, target: manylinux2014_x86_64 }
+          - { os: macos-13, target: macosx_10_13_universal2 }
+          - { os: windows-latest, target: win_amd64 }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pipx
+      - run: pipx install pipenv
+      - run: pipenv install --dev -e .
+      - run: pipenv install pyinstaller
+      - run: pipenv run bikeshed update
+      - run: pipenv run pyinstaller -y --collect-data=bikeshed --name=bikeshed ./bikeshed.py # bikeshed/__main__.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bikeshed-${{ matrix.target }}
+          path: dist/bikeshed
