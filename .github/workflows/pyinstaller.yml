@@ -40,6 +40,9 @@ jobs:
           - { os: ubuntu-20.04, target: manylinux2014_x86_64 }
           - { os: macos-13, target: macosx_10_13_universal2 }
           - { os: windows-latest, target: win_amd64 }
+    defaults:
+      run:
+        shell: bash
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -47,16 +50,13 @@ jobs:
           submodules: recursive
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
       - run: pip install pipx
       - run: pipx install pipenv
       - run: pipenv install --dev -e .
-      - shell: pipenv run bash -e {0}
-        run: pipenv install pyinstaller
-      - shell: pipenv run bash -e {0}
-        run: bikeshed update
-      - shell: pipenv run bash -e {0}
-        run: pyinstaller -y --collect-data=bikeshed --name=bikeshed ./bikeshed.py # ./bikeshed/__main__.py
+      - run: pipenv install pyinstaller
+      - run: pipenv run bikeshed update
+      - run: pipenv run pyinstaller -y --collect-data=bikeshed --name=bikeshed ./bikeshed.py # ./bikeshed/__main__.py
       - uses: actions/upload-artifact@v4
         with:
           name: bikeshed-${{ matrix.target }}
