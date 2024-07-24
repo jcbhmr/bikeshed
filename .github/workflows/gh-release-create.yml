@@ -30,8 +30,11 @@ jobs:
       - run: |
           for f in *; do
             pushd "$f"
-            if [[ $f == *win* ]]; then zip -r "../$f.zip" .
-            else tar -czf "../$f.tar.gz" .
+            if [[ $f == *win* ]]; then
+              zip -r "../$f.zip" .
+            else
+              tar -czf "../$f.tar.gz" .
+            fi
             popd
             rm -rf "$f"
           done
