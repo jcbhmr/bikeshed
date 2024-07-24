@@ -1,0 +1,46 @@
+name: gh release create
+on:
+  workflow_dispatch:
+    inputs:
+      draft:
+        description: ""
+        type: boolean
+        default: false
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+jobs:
+  pyinstaller:
+    uses: ./.github/workflows/pyinstaller.yml
+  get-version:
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: get-version
+        run: |
+          version=$(cat bikeshed/semver.txt)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+  gh-release-create:
+    needs: [pyinstaller, get-version]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+      - run: |
+          for f in *; do
+            pushd "$f"
+            if [[ $f == *win* ]]; then zip -r "../$f.zip" .
+            else tar -czf "../$f.tar.gz" .
+            popd
+            rm -rf "$f"
+          done
+      - run: |
+          gh release create "v$VERSION" \
+            ${{ (inputs.draft && '--draft') || '' }} \
+            --generate-notes \
+            ./*
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.get-version.outputs.version }}
