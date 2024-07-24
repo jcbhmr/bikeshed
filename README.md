@@ -3,6 +3,10 @@
 🚲 Bundles Bikeshed for use without Python or pip
 
 <p align=center>
+  <a href="https://github.com/jcbhmr/bikeshed/releases/latest"><img src=""></a>
+</p>
+
+<p align=center>
   <a href="https://github.com/jcbhmr/bikeshed/releases">GitHub releases (this project)</a>
   | <a href="https://speced.github.io/bikeshed/">Official Bikeshed website</a>
   | <a href="https://pypi.org/project/bikeshed/">Official <code>bikeshed</code> PyPI package</a>
