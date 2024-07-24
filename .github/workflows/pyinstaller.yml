@@ -51,18 +51,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      # https://pipenv.pypa.io/en/latest/installation.html
-      - run: |
-          pip install pipenv --user
-          if [ "$OS" = "Windows_NT" ]; then
-            echo "$(python -m site --user-base | sed 's/site-packages/Scripts/')" >> "$GITHUB_PATH"
-          else
-            echo "$(python -m site --user-base)/bin" >> "$GITHUB_PATH"
-          fi
-      - run: pipenv install --dev -e .
-      - run: pipenv install pyinstaller
-      - run: pipenv run bikeshed update
-      - run: pipenv run pyinstaller -y --collect-data=bikeshed --name=bikeshed ./bikeshed.py # ./bikeshed/__main__.py
+          cache: pip
+      # TODO: Use pipenv
+      - run: pip install -e .
+      - run: pip install pyinstaller
+      - run: bikeshed update
+      - run: pyinstaller -y --collect-data=bikeshed --name=bikeshed ./bikeshed.py # ./bikeshed/__main__.py
       - uses: actions/upload-artifact@v4
         with:
           name: bikeshed-${{ matrix.target }}
