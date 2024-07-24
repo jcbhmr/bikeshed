@@ -54,7 +54,9 @@ jobs:
       - run: pip install pipx
       - run: pipx install pipenv
       - run: pipenv install --dev -e .
-      - run: pipenv install pyinstaller
+      # https://github.com/pyinstaller/pyinstaller/issues/8665
+      # Current setuptools is 71.x.x. Most recent 70.x.x version is 70.3.0.
+      - run: pipenv install setuptools==70.3.0 pyinstaller
       - run: pipenv run bikeshed update
       - run: pipenv run pyinstaller -y --collect-data=bikeshed --name=bikeshed ./bikeshed.py # ./bikeshed/__main__.py
       - uses: actions/upload-artifact@v4
