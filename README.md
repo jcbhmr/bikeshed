@@ -1,3 +1,92 @@
+# Bikeshed prebuilt
+
+🚲 Bundles Bikeshed for use without Python or pip
+
+<p align=center>
+  <a href="https://github.com/jcbhmr/bikeshed/releases">GitHub releases (this project)</a>
+  | <a href="https://speced.github.io/bikeshed/">Official Bikeshed website</a>
+  | <a href="https://pypi.org/project/bikeshed/">Official <code>bikeshed</code> PyPI package</a>
+  | <a href="https://github.com/speced/bikeshed">Official Bikeshed GitHub</a>
+</p>
+
+🐍 Uses [PyInstaller](https://pyinstaller.org/en/stable/) \
+🏭 Compiles [the `bikeshed` PyPI package](https://pypi.org/project/bikeshed/) to a standalone program \
+[🚚 Distributed via GitHub releases](https://github.com/jcbhmr/bikeshed/releases) \
+💻 Builds for Windows x64, macOS M1 and Intel, and Linux x64
+
+## Installation
+
+![Python](https://img.shields.io/static/v1?style=for-the-badge&message=Python&color=3776AB&logo=Python&logoColor=FFFFFF&label=)
+![pipx](https://img.shields.io/static/v1?style=for-the-badge&message=pipx&color=222222&logo=pipx&logoColor=2CFFAA&label=)
+
+🛑 If possible you should **install Bikeshed directly from [the `bikeshed` PyPI package](https://pypi.org/project/bikeshed/)** as is [officially recommended on the Bikeshed Documentation website](https://speced.github.io/bikeshed/#install-final).
+
+```sh
+pipx install bikeshed
+```
+
+You can get Bikeshed builds built by this bikeshed-builder project from [the GitHub releases tab](https://github.com/jcbhmr/bikeshed/releases). These are unofficial.
+
+## Usage
+
+![Windows](https://img.shields.io/static/v1?style=for-the-badge&message=Windows&color=0078D4&logo=Windows&logoColor=FFFFFF&label=)
+![Linux](https://img.shields.io/static/v1?style=for-the-badge&message=Linux&color=222222&logo=Linux&logoColor=FCC624&label=)
+![macOS](https://img.shields.io/static/v1?style=for-the-badge&message=macOS&color=000000&logo=macOS&logoColor=FFFFFF&label=)
+
+This project is intended to be used & integrated with software that works better without the Python & pip requirements that the official Bikeshed distribution method uses. You can also use it as a standalone way to install Bikeshed without a Python environment. For example an npm redistribution of the Bikeshed project to be `npm install <bikeshed_package_name>` would not want to require a particular Python environment. Instead, they would opt for a premade all-in-one binary/package such as the PyInstaller bikeshed released by this project! 😊
+
+Here are the relevant URLs that you would use in your code to fetch releases from this bikeshed-builder project:
+
+```
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.9/bikeshed-macosx_10_13_universal2.tar.gz
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.9/bikeshed-manylinux2014_x86_64.tar.gz
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.9/bikeshed-win_amd64.zip
+```
+
+Programs are encouraged to pin an exact version of Bikeshed and then update Bikeshed as a dependency as opposed to always fetching the latest bikeshed release binaries.
+
+Here's some cool😎 [nightly.link](https://nightly.link/) URLs which I don't recommend using.
+
+```
+https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-macosx_10_13_universal2.zip
+https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-manylinux2014_x86_64.zip
+https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-win_amd64.zip
+```
+
+The `.zip` and `.tar.gz` archives all have the same layout:
+
+```
+.
+├── bikeshed
+└── _internal/
+    └── <pyinstaller_files>...
+```
+
+Note that everything is in the root folder! TODO: What's the prevailing convention? Should there be a wrapper folder inside the tar/zip archive?
+
+## Development
+
+![Python](https://img.shields.io/static/v1?style=for-the-badge&message=Python&color=3776AB&logo=Python&logoColor=FFFFFF&label=)
+![GitHub Actions](https://img.shields.io/static/v1?style=for-the-badge&message=GitHub+Actions&color=2088FF&logo=GitHub+Actions&logoColor=FFFFFF&label=)
+
+Bikeshed doesn't do release tags. Make sure to manually watch [the release notes issue](https://github.com/speced/bikeshed/issues/1773) and then rebase this fork's patch on top of the semver bump commit that corresponds with that release.
+
+To rebase changes on top of upstream using the GitHub web UI:
+
+1. Create a new Pull Request speced/bikeshed `main` ➡ jcbhmr/bikeshed `main`
+2. Use the Merge dropdown to select Rebase
+3. Merge it!
+
+To create a release of this project:
+
+1. Run the gh release create workflow manually
+2. Choose `draft: true`
+3. Hope it works
+4. Manually check that things look OK
+5. Publish the draft release
+
+---
+
 Bikeshed, a spec preprocessor
 =============================
 
