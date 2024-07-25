@@ -42,9 +42,9 @@ This project is intended to be used & integrated with software that works better
 Here are the relevant URLs that you would use in your code to fetch releases from this bikeshed-builder project:
 
 ```
-https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.9/bikeshed-macosx_10_13_universal2.tar.gz
-https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.9/bikeshed-manylinux2014_x86_64.tar.gz
-https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.9/bikeshed-win_amd64.zip
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-macosx_10_13_universal2.tar.gz
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-manylinux2014_x86_64.tar.gz
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-win_amd64.zip
 ```
 
 Programs are encouraged to pin an exact version of Bikeshed and then update Bikeshed as a dependency as opposed to always fetching the latest bikeshed release binaries.
@@ -82,6 +82,7 @@ To create a release of this project:
 3. Hope it works
 4. Manually check that things look OK
 5. Publish the draft release
+6. Update the copyable URLs in the Usage section
 
 ---
 
