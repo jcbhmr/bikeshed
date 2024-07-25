@@ -21,8 +21,9 @@
 
 ## Installation
 
-![Python](https://img.shields.io/static/v1?style=for-the-badge&message=Python&color=3776AB&logo=Python&logoColor=FFFFFF&label=)
-![pipx](https://img.shields.io/static/v1?style=for-the-badge&message=pipx&color=222222&logo=pipx&logoColor=2CFFAA&label=)
+![Windows](https://img.shields.io/static/v1?style=for-the-badge&message=Windows&color=0078D4&logo=Windows&logoColor=FFFFFF&label=)
+![Linux](https://img.shields.io/static/v1?style=for-the-badge&message=Linux&color=222222&logo=Linux&logoColor=FCC624&label=)
+![macOS](https://img.shields.io/static/v1?style=for-the-badge&message=macOS&color=000000&logo=macOS&logoColor=FFFFFF&label=)
 
 🛑 If possible you should **install Bikeshed directly from [the `bikeshed` PyPI package](https://pypi.org/project/bikeshed/)** as is [officially recommended on the Bikeshed Documentation website](https://speced.github.io/bikeshed/#install-final).
 
@@ -31,12 +32,6 @@ pipx install bikeshed
 ```
 
 You can get Bikeshed builds built by this bikeshed-builder project from [the GitHub releases tab](https://github.com/jcbhmr/bikeshed/releases). These are unofficial.
-
-## Usage
-
-![Windows](https://img.shields.io/static/v1?style=for-the-badge&message=Windows&color=0078D4&logo=Windows&logoColor=FFFFFF&label=)
-![Linux](https://img.shields.io/static/v1?style=for-the-badge&message=Linux&color=222222&logo=Linux&logoColor=FCC624&label=)
-![macOS](https://img.shields.io/static/v1?style=for-the-badge&message=macOS&color=000000&logo=macOS&logoColor=FFFFFF&label=)
 
 This project is intended to be used & integrated with software that works better without the Python & pip requirements that the official Bikeshed distribution method uses. You can also use it as a standalone way to install Bikeshed without a Python environment. For example an npm redistribution of the Bikeshed project to be `npm install <bikeshed_package_name>` would not want to require a particular Python environment. Instead, they would opt for a premade all-in-one binary/package such as the PyInstaller bikeshed released by this project! 😊
 
@@ -68,6 +63,8 @@ The `.zip` and `.tar.gz` archives all have the same layout:
 ```
 
 Note that everything is in the root folder! TODO: What's the prevailing convention? Should there be a wrapper folder inside the tar/zip archive?
+
+[📚 Read the Bikeshed documentation for how to use the `bikeshed` CLI](https://speced.github.io/bikeshed/)
 
 ## Development
 
