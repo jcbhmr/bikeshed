@@ -73,13 +73,7 @@ Note that everything is in the root folder! TODO: What's the prevailing conventi
 ![Python](https://img.shields.io/static/v1?style=for-the-badge&message=Python&color=3776AB&logo=Python&logoColor=FFFFFF&label=)
 ![GitHub Actions](https://img.shields.io/static/v1?style=for-the-badge&message=GitHub+Actions&color=2088FF&logo=GitHub+Actions&logoColor=FFFFFF&label=)
 
-Bikeshed doesn't do release tags. Make sure to manually watch [the release notes issue](https://github.com/speced/bikeshed/issues/1773) and then rebase this fork's patch on top of the semver bump commit that corresponds with that release.
-
-To rebase changes on top of upstream using the GitHub web UI:
-
-1. Create a new Pull Request speced/bikeshed `main` ➡ jcbhmr/bikeshed `main`
-2. Use the Merge dropdown to select Rebase
-3. Merge it!
+Bikeshed doesn't do release tags. Make sure to manually watch [the release notes issue](https://github.com/speced/bikeshed/issues/1773) and then merge any changes into this fork.
 
 To create a release of this project:
 
