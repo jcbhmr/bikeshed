@@ -25,7 +25,7 @@
 ![Linux](https://img.shields.io/static/v1?style=for-the-badge&message=Linux&color=222222&logo=Linux&logoColor=FCC624&label=)
 ![macOS](https://img.shields.io/static/v1?style=for-the-badge&message=macOS&color=000000&logo=macOS&logoColor=FFFFFF&label=)
 
-🛑 If possible you should **install Bikeshed directly from [the `bikeshed` PyPI package](https://pypi.org/project/bikeshed/)** as is [officially recommended on the Bikeshed Documentation website](https://speced.github.io/bikeshed/#install-final).
+🛑 If possible you should **install Bikeshed directly from [the `bikeshed` PyPI package](https://pypi.org/project/bikeshed/)** as is [officially recommended](https://speced.github.io/bikeshed/#install-final).
 
 ```sh
 pipx install bikeshed
