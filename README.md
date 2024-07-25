@@ -73,7 +73,7 @@ Note that everything is in the root folder! TODO: What's the prevailing conventi
 ![Python](https://img.shields.io/static/v1?style=for-the-badge&message=Python&color=3776AB&logo=Python&logoColor=FFFFFF&label=)
 ![GitHub Actions](https://img.shields.io/static/v1?style=for-the-badge&message=GitHub+Actions&color=2088FF&logo=GitHub+Actions&logoColor=FFFFFF&label=)
 
-This is a friendly fork🔀 of [speced/bikeshed](https://github.com/speced/bikeshed). I don't know if upstream wants to host prebuilt binaries. 🤷‍♀️ This project is a small patch (hopefully) that should build each Bikeshed CLI version and publish some sweet precompiled binaries. Want to add another OS/arch combo? [Open an issue](https://github.com/jcbhmr/bikeshed/issues/new) or [a Pull Request](https://github.com/jcbhmr/bikeshed/pulls)! ❤️
+This is a friendly fork🔀 of [speced/bikeshed](https://github.com/speced/bikeshed). I don't know if upstream wants to host prebuilt binaries. 🤷‍♀️ This project is a small patch (hopefully) that should build each Bikeshed CLI version and publish some sweet precompiled binaries.
 
 Bikeshed doesn't do release tags. Make sure to manually watch [the release notes issue](https://github.com/speced/bikeshed/issues/1773) and then merge any changes into this fork.
 
