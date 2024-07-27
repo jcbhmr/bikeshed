@@ -48,8 +48,8 @@ Programs are encouraged to pin an exact version of Bikeshed and then update Bike
 Here's some cool😎 [nightly.link](https://nightly.link/) URLs which I don't recommend using.
 
 ```
-https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-macosx_10_13_universal2.zip
-https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-manylinux2014_x86_64.zip
+https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-macosx_10_9_universal2.zip
+https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-linux_x86_64.zip
 https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-win_amd64.zip
 ```
 
