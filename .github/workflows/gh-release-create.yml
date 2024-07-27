@@ -38,12 +38,12 @@ jobs:
             popd
             rm -rf "$f"
           done
-      - run: |
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.get-version.outputs.version }}
+        run: |
           gh release create "v$VERSION" \
             ${{ (inputs.draft && '--draft') || '' }} \
             --generate-notes \
             ./*
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          VERSION: ${{ needs.get-version.outputs.version }}
