@@ -1,11 +1,6 @@
 name: gh release create
 on:
   workflow_dispatch:
-    inputs:
-      draft:
-        description: ""
-        type: boolean
-        default: false
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   pyinstaller:
@@ -27,23 +22,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
-      - run: |
-          for f in *; do
-            pushd "$f"
-            if [[ $f == *win* ]]; then
-              zip -r "../$f.zip" .
-            else
-              tar -czf "../$f.tar.gz" .
-            fi
-            popd
-            rm -rf "$f"
-          done
+      # https://github.com/actions/upload-artifact/issues/38
+      - working-directory: bikeshed-linux_x86_64
+        run: |
+          chmod +x bikeshed
+          tar -czvf ../bikeshed-linux_x86_64.tar.gz .
+      - working-directory: bikeshed-macosx_10_9_universal2
+        run: |
+          chmod +x bikeshed
+          tar -czvf ../bikeshed-macosx_10_9_universal2.tar.gz .
+      - working-directory: bikeshed-win_amd64
+        run: |
+          chmod +x bikeshed.exe
+          zip -r ../bikeshed-win_amd64.zip .
       - env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           VERSION: ${{ needs.get-version.outputs.version }}
         run: |
-          gh release create "v$VERSION" \
-            ${{ (inputs.draft && '--draft') || '' }} \
-            --generate-notes \
-            ./*
+          gh release create "v$VERSION" --draft --generate-notes \
+            bikeshed-linux_x86_64.tar.gz \
+            bikeshed-macosx_10_9_universal2.tar.gz \
+            bikeshed-win_amd64.zip
