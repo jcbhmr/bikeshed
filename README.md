@@ -43,7 +43,7 @@ https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-manylinux
 https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-win_amd64.zip
 ```
 
-Programs are encouraged to pin an exact version of Bikeshed and then update Bikeshed as a dependency as opposed to always fetching the latest bikeshed release binaries.
+Programs are encouraged to pin an exact version of Bikeshed and then update Bikeshed as a dependency as opposed to always fetching the latest Bikeshed release binaries.
 
 Here's some cool😎 [nightly.link](https://nightly.link/) URLs which I don't recommend using.
 
