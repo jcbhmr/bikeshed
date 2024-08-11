@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
       } else if (IsXnu() && IsArm64()) {
         std::filesystem::copy("/zip/bikeshed-macosx_11_0_arm64", cache_dir, std::filesystem::copy_options::recursive);
       } else if (IsWindows() && IsX64()) {
-        std::filesystem::copy("/zip/bikeshed-win_amd64.exe", cache_dir, std::filesystem::copy_options::recursive);
+        std::filesystem::copy("/zip/bikeshed-win_amd64", cache_dir, std::filesystem::copy_options::recursive);
       } else {
         throw std::runtime_error("unsupported platform");
       }
