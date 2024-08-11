@@ -7,9 +7,11 @@ on:
       - "daily-test-sync"
   pull_request:
   workflow_dispatch: {}
+  workflow_call:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_call'
     needs: lint
     runs-on: ${{ matrix.os }}
     strategy:
@@ -41,6 +43,7 @@ jobs:
       run: bikeshed --no-update test
 
   lint:
+    if: github.event_name != 'workflow_call'
 
     runs-on: ubuntu-latest
 
@@ -68,3 +71,38 @@ jobs:
     - name: Lint with mypy
       run: |
         mypy
+
+  pyinstaller:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/#platform-tag
+          # target=$(python -c 'import sysconfig; print(sysconfig.get_platform().replace("-", "_").replace(".", "_"))')
+          - { os: ubuntu-latest, target: linux_x86_64 }
+          - { os: macos-latest, target: macosx_10_9_universal2 }
+          - { os: windows-latest, target: win_amd64 }
+    defaults:
+      run:
+        shell: bash
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e .
+      - run: pip install pyinstaller
+      - run: bikeshed update
+      # https://pyinstaller.org/en/stable/feature-notes.html#macos-multi-arch-support
+      - run: |
+          pyinstaller -y --name=bikeshed --collect-all=bikeshed \
+            ${{ (contains(matrix.target, 'universal2') && '--target-arch=universal2') || '' }} \
+            ./bikeshed.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bikeshed-${{ matrix.target }}
+          path: dist
