@@ -1,0 +1,54 @@
+name: Create release
+on:
+  workflow_dispatch:
+    inputs:
+      draft:
+        type: boolean
+jobs:
+  build:
+    uses: ./.github/workflows/ci.yml
+  version:
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: version
+        run: |
+          version=$(cat bikeshed/semver.txt)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+  gh-release-create:
+    needs: [build, version]
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-linux_x86_64
+          path: bikeshed-linux_x86_64
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-macosx_10_9_universal2
+          path: bikeshed-macosx_10_9_universal2
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-win_amd64
+          path: bikeshed-win_amd64
+      # https://github.com/actions/upload-artifact/issues/38
+      - run: chmod +x bikeshed-linux_x86_64/bikeshed
+      - run: chmod +x bikeshed-macosx_10_9_universal2/bikeshed
+      - run: tar czf bikeshed-linux_x86_64.tar.gz bikeshed-linux_x86_64
+      - run: tar czf bikeshed-macosx_10_9_universal2.tar.gz bikeshed-macosx_10_9_universal2
+      - run: zip -r bikeshed-win_amd64.zip bikeshed-win_amd64
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          gh release create "v$VERSION" \
+            ${{ (inputs.draft && '--draft') || '' }} \
+            --generate-notes \
+            bikeshed-linux_x86_64.tar.gz \
+            bikeshed-macosx_10_9_universal2.tar.gz \
+            bikeshed-win_amd64.zip
