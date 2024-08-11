@@ -22,6 +22,8 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-latest
+    env:
+      version: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -35,17 +37,18 @@ jobs:
       # https://github.com/actions/upload-artifact/issues/38
       - run: chmod +x bikeshed-linux_x86_64/bikeshed
       - run: chmod +x bikeshed-macosx_10_9_universal2/bikeshed
-      - run: tar czf bikeshed-linux_x86_64.tar.gz bikeshed-linux_x86_64
-      - run: tar czf bikeshed-macosx_10_9_universal2.tar.gz bikeshed-macosx_10_9_universal2
-      - run: zip -r bikeshed-win_amd64.zip bikeshed-win_amd64
+      - run: tar czf bikeshed-linux_x86_64-$version.tar.gz bikeshed-linux_x86_64-$version
+      - run: tar czf bikeshed-macosx_10_9_universal2-$version.tar.gz bikeshed-macosx_10_9_universal2-$version
+      - run: zip -r bikeshed-win_amd64-$version.zip bikeshed-win_amd64-$version
+      - run: zip -r bikeshed-ape-$version.zip bikeshed-ape-$version
       - env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          VERSION: ${{ needs.version.outputs.version }}
         run: |
-          gh release create "v$VERSION" \
+          gh release create "v$version" \
             ${{ (inputs.draft && '--draft') || '' }} \
             --generate-notes \
-            bikeshed-linux_x86_64.tar.gz \
-            bikeshed-macosx_10_9_universal2.tar.gz \
-            bikeshed-win_amd64.zip
+            bikeshed-linux_x86_64-$version.tar.gz \
+            bikeshed-macosx_10_9_universal2-$version.tar.gz \
+            bikeshed-win_amd64-$version.zip \
+            bikeshed-ape-$version.zip
