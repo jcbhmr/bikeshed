@@ -102,7 +102,58 @@ jobs:
           pyinstaller -y --name=bikeshed --collect-all=bikeshed \
             ${{ (contains(matrix.target, 'universal2') && '--target-arch=universal2') || '' }} \
             ./bikeshed.py
+      - env:
+          target: ${{ matrix.target }}
+        run: |
+          version=$(cat bikeshed/semver.txt)
+          mkdir stage
+          mv dist/bikeshed stage/bikeshed-$target-$version
       - uses: actions/upload-artifact@v4
         with:
           name: bikeshed-${{ matrix.target }}
-          path: dist
+          path: stage
+
+  bikeshed-ape:
+    needs: pyinstaller
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: jart/cosmopolitan
+          path: cosmopolitan
+      - working-directory: cosmopolitan
+        run: |
+          sudo wget -O /usr/bin/ape https://cosmo.zip/pub/cosmos/bin/ape-$(uname -m).elf
+          sudo chmod +x /usr/bin/ape
+          sudo sh -c "echo ':APE:M::MZqFpD::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
+          sudo sh -c "echo ':APE-jart:M::jartsr::/usr/bin/ape:' >/proc/sys/fs/binfmt_misc/register"
+          ./tool/cosmocc/package.sh
+          echo "$PWD/cosmocc/bin" >> "$GITHUB_PATH"
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-linux_x86_64
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-macosx_10_9_universal2
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-win_amd64
+      - run: |
+          version=$(cat bikeshed/semver.txt)
+          mkdir bikeshed-ape-$version
+          mv bikeshed-linux_x86_64-$version bikeshed-linux_x86_64
+          mv bikeshed-macosx_10_9_universal2-$version bikeshed-macosx_10_9_universal2
+          mv bikeshed-win_amd64-$version bikeshed-win_amd64
+          cosmoc++ -std=c++23 -fexceptions -DVERSION=\"$version\" -o bikeshed-ape-$version/bikeshed bikeshed-ape.cpp
+          rm bikeshed-ape-$version/bikeshed.aarch64.elf
+          rm bikeshed-ape-$version/bikeshed.com.dbg
+          zip -Ar bikeshed-ape-$version/bikeshed bikeshed-linux_x86_64 bikeshed-macosx_10_9_universal2 bikeshed-win_amd64
+      - run: |
+          version=$(cat bikeshed/semver.txt)
+          mkdir stage
+          mv bikeshed-ape-$version stage/bikeshed-ape-$version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bikeshed-ape
+          path: stage
