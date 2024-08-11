@@ -39,8 +39,10 @@ int main(int argc, char *argv[]) {
     try {
       if (IsLinux() && IsX64()) {
         std::filesystem::copy("/zip/bikeshed-linux_x86_64", cache_dir, std::filesystem::copy_options::recursive);
-      } else if (IsXnu()) {
-        std::filesystem::copy("/zip/bikeshed-macosx_10_9_universal2", cache_dir, std::filesystem::copy_options::recursive);
+      } else if (IsXnu() && IsX64()) {
+        std::filesystem::copy("/zip/bikeshed-macosx_10_9_x86_64", cache_dir, std::filesystem::copy_options::recursive);
+      } else if (IsXnu() && IsArm64()) {
+        std::filesystem::copy("/zip/bikeshed-macosx_11_0_arm64", cache_dir, std::filesystem::copy_options::recursive);
       } else if (IsWindows() && IsX64()) {
         std::filesystem::copy("/zip/bikeshed-win_amd64.exe", cache_dir, std::filesystem::copy_options::recursive);
       } else {
