@@ -80,7 +80,8 @@ jobs:
           # https://packaging.python.org/en/latest/specifications/platform-compatibility-tags/#platform-tag
           # target=$(python -c 'import sysconfig; print(sysconfig.get_platform().replace("-", "_").replace(".", "_"))')
           - { os: ubuntu-latest, target: linux_x86_64 }
-          - { os: macos-latest, target: macosx_10_9_universal2 }
+          - { os: macos-latest, target: macosx_11_0_arm64 }
+          - { os: macos-13, target: macosx_10_9_x86_64 }
           - { os: windows-latest, target: win_amd64 }
     defaults:
       run:
@@ -93,15 +94,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: pip
       - run: pip install -e .
       - run: pip install pyinstaller
       - run: bikeshed update
-      # https://pyinstaller.org/en/stable/feature-notes.html#macos-multi-arch-support
-      - run: |
-          pyinstaller -y --name=bikeshed --collect-all=bikeshed \
-            ${{ (contains(matrix.target, 'universal2') && '--target-arch=universal2') || '' }} \
-            ./bikeshed.py
+      - run: pyinstaller -y --name=bikeshed --collect-all=bikeshed ./bikeshed.py
       - env:
           target: ${{ matrix.target }}
         run: |
@@ -135,7 +131,10 @@ jobs:
           name: bikeshed-linux_x86_64
       - uses: actions/download-artifact@v4
         with:
-          name: bikeshed-macosx_10_9_universal2
+          name: bikeshed-macosx_10_9_x86_64
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-macosx_11_0_arm64
       - uses: actions/download-artifact@v4
         with:
           name: bikeshed-win_amd64
@@ -143,12 +142,13 @@ jobs:
           version=$(cat bikeshed/semver.txt)
           mkdir bikeshed-ape-$version
           mv bikeshed-linux_x86_64-$version bikeshed-linux_x86_64
-          mv bikeshed-macosx_10_9_universal2-$version bikeshed-macosx_10_9_universal2
+          mv bikeshed-macosx_10_9_x86_64-$version bikeshed-macosx_10_9_x86_64
+          mv bikeshed-macosx_11_0_arm64-$version bikeshed-macosx_11_0_arm64
           mv bikeshed-win_amd64-$version bikeshed-win_amd64
           cosmoc++ -std=c++23 -fexceptions -DVERSION=\"$version\" -o bikeshed-ape-$version/bikeshed bikeshed-ape.cpp
           rm bikeshed-ape-$version/bikeshed.aarch64.elf
           rm bikeshed-ape-$version/bikeshed.com.dbg
-          zip -Ar bikeshed-ape-$version/bikeshed bikeshed-linux_x86_64 bikeshed-macosx_10_9_universal2 bikeshed-win_amd64
+          zip -Ar bikeshed-ape-$version/bikeshed bikeshed-linux_x86_64 bikeshed-macosx_10_9_x86_64 bikeshed-macosx_11_0_arm64 bikeshed-win_amd64
       - run: |
           version=$(cat bikeshed/semver.txt)
           mkdir stage
