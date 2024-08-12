@@ -30,7 +30,10 @@ jobs:
           name: bikeshed-linux_x86_64
       - uses: actions/download-artifact@v4
         with:
-          name: bikeshed-macosx_10_9_universal2
+          name: bikeshed-macosx_10_9_x86_64
+      - uses: actions/download-artifact@v4
+        with:
+          name: bikeshed-macosx_11_0_arm64
       - uses: actions/download-artifact@v4
         with:
           name: bikeshed-win_amd64
@@ -39,9 +42,11 @@ jobs:
           name: bikeshed-ape
       # https://github.com/actions/upload-artifact/issues/38
       - run: chmod +x bikeshed-linux_x86_64/bikeshed
-      - run: chmod +x bikeshed-macosx_10_9_universal2/bikeshed
+      - run: chmod +x bikeshed-macosx_10_9_x86_64/bikeshed
+      - run: chmod +x bikeshed-macosx_11_0_arm64/bikeshed
       - run: tar czf bikeshed-linux_x86_64-$version.tar.gz bikeshed-linux_x86_64-$version
-      - run: tar czf bikeshed-macosx_10_9_universal2-$version.tar.gz bikeshed-macosx_10_9_universal2-$version
+      - run: tar czf bikeshed-macosx_10_9_x86_64-$version.tar.gz bikeshed-macosx_10_9_x86_64-$version
+      - run: tar czf bikeshed-macosx_11_0_arm64-$version.tar.gz bikeshed-macosx_11_0_arm64-$version
       - run: zip -r bikeshed-win_amd64-$version.zip bikeshed-win_amd64-$version
       - run: zip -r bikeshed-ape-$version.zip bikeshed-ape-$version
       - env:
@@ -52,6 +57,7 @@ jobs:
             ${{ (inputs.draft && '--draft') || '' }} \
             --generate-notes \
             bikeshed-linux_x86_64-$version.tar.gz \
-            bikeshed-macosx_10_9_universal2-$version.tar.gz \
+            bikeshed-macosx_10_9_x86_64-$version.tar.gz \
+            bikeshed-macosx_11_0_arm64-$version.tar.gz \
             bikeshed-win_amd64-$version.zip \
             bikeshed-ape-$version.zip
