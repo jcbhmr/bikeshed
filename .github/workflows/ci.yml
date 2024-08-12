@@ -8,10 +8,14 @@ on:
   pull_request:
   workflow_dispatch: {}
   workflow_call:
+    inputs:
+      workflow_call:
+        type: boolean
+        default: true
 
 jobs:
   build:
-    if: github.event_name != 'workflow_call'
+    if: "!inputs.workflow_call"
     needs: lint
     runs-on: ${{ matrix.os }}
     strategy:
@@ -43,7 +47,7 @@ jobs:
       run: bikeshed --no-update test
 
   lint:
-    if: github.event_name != 'workflow_call'
+    if: "!inputs.workflow_call"
 
     runs-on: ubuntu-latest
 
