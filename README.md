@@ -4,7 +4,7 @@
 🔀 Forked from [speced/bikeshed](https://github.com/speced/bikeshed)
 
 <p align=center>
-  <a href="https://github.com/jcbhmr/bikeshed/releases/latest"><img src="https://github.com/user-attachments/assets/fb579cec-9c7f-45d1-8602-498d04f66069"></a>
+  <a href="https://github.com/jcbhmr/bikeshed/releases/latest"><img src="https://github.com/user-attachments/assets/5ac85fe1-d904-4f24-9c4a-7788557305e4"></a>
 </p>
 
 <p align=center>
