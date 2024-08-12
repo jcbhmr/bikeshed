@@ -36,31 +36,16 @@ This project is intended to be used & integrated with software that works better
 Here are the relevant URLs that you would use in your code to fetch releases from this bikeshed-builder project:
 
 ```
-https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-macosx_10_13_universal2.tar.gz
-https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-manylinux2014_x86_64.tar.gz
-https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.10/bikeshed-win_amd64.zip
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-linux_x86_64-4.1.12.tar.gz
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-macosx_10_9_x86_64-4.1.12.tar.gz
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-macosx_11_0_arm64-4.1.12.tar.gz
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-win_amd64-4.1.12.zip
+https://nightly.link/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-ape-4.1.12.zip
 ```
+
+In addition to the PyInstaller tarballs there's also an [actually portable executable](https://justine.lol/ape.html) (APE) that bundles the Windows, macOS (x86-64 & AArch64), and Linux binaries into a single multiplatform executable.
 
 Programs are encouraged to pin an exact version of Bikeshed and then update Bikeshed as a dependency as opposed to always fetching the latest Bikeshed release binaries.
-
-Here's some cool😎 [nightly.link](https://nightly.link/) URLs which I don't recommend using.
-
-```
-https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-macosx_10_9_universal2.zip
-https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-linux_x86_64.zip
-https://nightly.link/jcbhmr/bikeshed/workflows/pyinstaller/main/bikeshed-win_amd64.zip
-```
-
-The `.zip` and `.tar.gz` archives all have the same layout:
-
-```
-.
-├── bikeshed
-└── _internal/
-    └── <pyinstaller_files>...
-```
-
-Note that everything is in the root folder! TODO: What's the prevailing convention? Should there be a wrapper folder inside the tar/zip archive?
 
 [📚 Read the Bikeshed documentation for how to use the `bikeshed` CLI](https://speced.github.io/bikeshed/)
 
@@ -75,12 +60,9 @@ Bikeshed doesn't do release tags. Make sure to manually watch [the release notes
 
 To create a release of this project:
 
-1. Run the gh release create workflow manually
-2. Choose `draft: true`
-3. Hope it works
-4. Manually check that things look OK
-5. Publish the draft release
-6. Update the copyable URLs in the Usage section
+1. Run the "Create release" workflow manually. Choose `draft: true`.
+4. Check the draft release using the GitHub web UI. If it looks good, publish it!
+6. Update the copyable URLs in the Usage section.
 
 ---
 
