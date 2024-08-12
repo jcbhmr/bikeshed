@@ -36,11 +36,11 @@ This project is intended to be used & integrated with software that works better
 Here are the relevant URLs that you would use in your code to fetch releases from this bikeshed-builder project:
 
 ```
-https://github.com/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-linux_x86_64-4.1.12.tar.gz
-https://github.com/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-macosx_10_9_x86_64-4.1.12.tar.gz
-https://github.com/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-macosx_11_0_arm64-4.1.12.tar.gz
-https://github.com/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-win_amd64-4.1.12.zip
-https://github.com/jcbhmr/bikeshed/releases/download/4.1.12/bikeshed-ape-4.1.12.zip
+https://github.com/jcbhmr/bikeshed/releases/download/v4.1.12/bikeshed-linux_x86_64-4.1.12.tar.gz
+https://github.com/jcbhmr/bikeshed/releases/download/v4.1.12/bikeshed-macosx_10_9_x86_64-4.1.12.tar.gz
+https://github.com/jcbhmr/bikeshed/releases/download/v4.1.12/bikeshed-macosx_11_0_arm64-4.1.12.tar.gz
+https://github.com/jcbhmr/bikeshed/releases/download/v4.1.12/bikeshed-win_amd64-4.1.12.zip
+https://github.com/jcbhmr/bikeshed/releases/download/v4.1.12/bikeshed-ape-4.1.12.zip
 ```
 
 In addition to the PyInstaller tarballs there's also an [actually portable executable](https://justine.lol/ape.html) (APE) that bundles the Windows, macOS (x86-64 & AArch64), and Linux binaries into a single multiplatform executable.
