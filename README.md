@@ -15,7 +15,8 @@
 🐍 Uses [PyInstaller](https://pyinstaller.org/en/stable/) \
 🏭 Compiles [the `bikeshed` PyPI package](https://pypi.org/project/bikeshed/) to a standalone program \
 [🚚 Distributed via GitHub releases](https://github.com/jcbhmr/bikeshed/releases) \
-💻 Builds for Windows x64, macOS M1 and Intel, and Linux x64
+💻 Builds for Windows, macOS, and Linux \
+🌌 Bundled as a single [actually portable executable](https://justine.lol/ape.html)
 
 ## Installation
 
