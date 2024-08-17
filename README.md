@@ -34,7 +34,7 @@ You can get Bikeshed builds built by this bikeshed-builder project from [the Git
 
 This project is intended to be used & integrated with software that works better without the Python & pip requirements that the official Bikeshed distribution method uses. You can also use it as a standalone way to install Bikeshed without a Python environment. For example an npm redistribution of the Bikeshed project to be `npm install <bikeshed_package_name>` would not want to require a particular Python environment. Instead, they would opt for a premade all-in-one binary/package such as the PyInstaller bikeshed released by this project! 😊
 
-Here are the relevant URLs that you would use in your code to fetch releases from this bikeshed-builder project:
+Here are the relevant URLs that you would use in your code to fetch releases from this project:
 
 ```
 https://github.com/jcbhmr/bikeshed/releases/download/v4.1.12/bikeshed-linux_x86_64-4.1.12.tar.gz
