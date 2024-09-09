@@ -65,6 +65,8 @@ To create a release of this project:
 4. Check the draft release using the GitHub web UI. If it looks good, publish it!
 6. Update the copyable URLs in the Usage section.
 
+TODO: [I need some assistance in handling non-zero exit codes and process signals properly in Windows.](https://github.com/jcbhmr/bikeshed/blob/56d3c38789064c84101633302547a265e36a2a79/bikeshed-ape.cpp#L109) If anyone reading this knows how to `waitpid()` correctly please enlighten me! ☺️
+
 ---
 
 Bikeshed, a spec preprocessor
