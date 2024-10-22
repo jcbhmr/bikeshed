@@ -356,25 +356,25 @@ class MetadataManager:
             statusName = doc.doctype.status.name
             if statusName == "FPWD":
                 macros["w3c-stylesheet-url"] = "https://www.w3.org/StyleSheets/TR/2021/W3C-WD"
-                macros["w3c-status-url"] = "https://www.w3.org/standards/types#FPWD"
+                macros["w3c-status-url"] = "https://www.w3.org/standards/types/#FPWD"
             elif statusName in ("NOTE-FPWD", "NOTE-WD"):
                 macros["w3c-stylesheet-url"] = "https://www.w3.org/StyleSheets/TR/2021/W3C-DNOTE"
-                macros["w3c-status-url"] = "https://www.w3.org/standards/types#DNOTE"
+                macros["w3c-status-url"] = "https://www.w3.org/standards/types/#DNOTE"
             elif statusName == "FINDING":
                 macros["w3c-stylesheet-url"] = "https://www.w3.org/StyleSheets/TR/2021/W3C-NOTE"
-                macros["w3c-status-url"] = "https://www.w3.org/standards/types#FINDING"
+                macros["w3c-status-url"] = "https://www.w3.org/standards/types/#FINDING"
             elif statusName == "CG-DRAFT":
                 macros["w3c-stylesheet-url"] = "https://www.w3.org/StyleSheets/TR/2021/cg-draft"
-                macros["w3c-status-url"] = "https://www.w3.org/standards/types#CG-DRAFT"
+                macros["w3c-status-url"] = "https://www.w3.org/standards/types/#CG-DRAFT"
             elif statusName == "CG-FINAL":
                 macros["w3c-stylesheet-url"] = "https://www.w3.org/StyleSheets/TR/2021/cg-final"
-                macros["w3c-status-url"] = "https://www.w3.org/standards/types#CG-FINAL"
+                macros["w3c-status-url"] = "https://www.w3.org/standards/types/#CG-FINAL"
             elif statusName == "NOTE-ED":
                 macros["w3c-stylesheet-url"] = "https://www.w3.org/StyleSheets/TR/2021/W3C-ED"
-                macros["w3c-status-url"] = "https://www.w3.org/standards/types#ED"
+                macros["w3c-status-url"] = "https://www.w3.org/standards/types/#ED"
             else:
                 macros["w3c-stylesheet-url"] = f"https://www.w3.org/StyleSheets/TR/2021/W3C-{statusName}"
-                macros["w3c-status-url"] = f"https://www.w3.org/standards/types#{statusName}"
+                macros["w3c-status-url"] = f"https://www.w3.org/standards/types/#{statusName}"
         if self.customWarningText is not None:
             macros["customwarningtext"] = parsedTextFromRawLines(
                 self.customWarningText,
@@ -1016,6 +1016,12 @@ def parseDieWhen(key: str, val: str, lineNum: str | int | None) -> str:
     return "late"
 
 
+def parseIgnoreMdnFailure(key: str, val: str, lineNum: str | int | None) -> list[str]:
+    vals = [x.strip() for x in val.split(",")]
+    vals = [x[1:] if x.startswith("#") else x for x in vals]
+    return vals
+
+
 def parse(lines: t.Sequence[Line]) -> tuple[list[Line], MetadataManager]:
     # Given HTML document text, in the form of an array of text lines,
     # extracts all <pre class=metadata> lines and parses their contents.
@@ -1099,7 +1105,9 @@ def inferIndent(lines: t.Sequence[Line]) -> IndentInfo:
     indentSizes: Counter[int] = Counter()
     info = IndentInfo()
     for line in lines:
-        match = re.match("( +)", line.text)
+        # Purposely require at least two spaces; I don't
+        # auto-detect single-space indents. Get help.
+        match = re.match("( {2,})", line.text)
         if match:
             indentSizes[len(match.group(1))] += 1
             info.spaceLines += 1
@@ -1130,7 +1138,8 @@ def inferIndent(lines: t.Sequence[Line]) -> IndentInfo:
                     evenDivisions[candidateIndent] += lineCount
                 if spaceCount == candidateIndent:
                     evenDivisions[candidateIndent] += lineCount
-        info.size = evenDivisions.most_common(1)[0][0]
+        if evenDivisions:
+            info.size = evenDivisions.most_common(1)[0][0]
     return info
 
 
@@ -1364,7 +1373,7 @@ KNOWN_KEYS = {
         joinList,
         parseLiteralList,
     ),
-    "Ignore Mdn Failure": Metadata("Ignore MDN Failure", "ignoreMDNFailure", joinList, parseLiteralList),
+    "Ignore Mdn Failure": Metadata("Ignore MDN Failure", "ignoreMDNFailure", joinList, parseIgnoreMdnFailure),
     "Ignored Terms": Metadata("Ignored Terms", "ignoredTerms", joinList, parseCommaSeparated),
     "Ignored Vars": Metadata("Ignored Vars", "ignoredVars", joinList, parseCommaSeparated),
     "Image Auto Size": Metadata("Image Auto Size", "imgAutoSize", joinValue, parseBoolean),

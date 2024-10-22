@@ -652,16 +652,17 @@ so they're specified before the individual commands:
 	It does everything else,
 	just skips that final "save" operation.
 
-: `--print= [ plain | console | markup ]`
+: `--print= [ plain | console | markup | json ]`
 :: Specifies how Bikeshed should output its messages.
-	Default is "console",
-	which outputs colored text using console color codes.
-	"plain" outputs the same text as "console",
-	but without any color codes
-	(which look like gibberish if you're not outputting to a console).
-	"markup" outputs the text in a light markup structure
-	(suitable for parsing as HTML),
-	for easier parsing of the output by tools.
+
+	* `plain` prints as plain text.
+	* `console` (the default) prints as plain text,
+		but with console color codes to help
+		(which look like jibberish if not viewed in a console).
+	* `markup` prints the messages in a light markup structure
+		(nominally XML, but I don't go out of my way to double check that it's valid;
+		it's definitely parseable as HTML).
+	* `json` prints the messages as JSON.
 
 : `--no-update`
 :: By default, Bikeshed checks how old its data files are
@@ -1413,12 +1414,9 @@ There are several additional optional keys:
 			to allow it to silently upgrade when possible;
 			otherwise, if directly turned on,
 			it will emit a fatal error if it can't find your spec.
-		* <dfn>Ignore MDN Failure</dfn> takes one of the IDs that MDN is attempting to target,
+		* <dfn>Ignore MDN Failure</dfn> takes a comma-separated list of IDs that MDN is attempting (and failing) to target,
 			and prevents Bikeshed from emitting a warning
 			if it can't find that ID.
-			You can supply this multiple times
-			to ignore several IDs,
-			if needed.
 			This allows you to have avoid having a build warning
 			while waiting for MDN to be updated.
 	* Several keys relate to the [Can I Use](https://caniuse.com/) project:
