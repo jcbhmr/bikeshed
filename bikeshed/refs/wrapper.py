@@ -27,6 +27,7 @@ class RefWrapper:
     # It also makes all the ref dict keys look like object attributes.
 
     text: str
+    displayText: str
     _ref: RefDataT
 
     @property
@@ -82,6 +83,7 @@ class RefWrapper:
     def __json__(self) -> t.JSONT:
         return {
             "text": self.text,
+            "displayText": self.displayText,
             "type": self.type,
             "spec": self.spec,
             "shortname": self.shortname,
