@@ -1197,10 +1197,11 @@ def getSpecRepository(doc: t.SpecT) -> repository.Repository | None:
         source_dir = doc.inputSource.directory()
         try:
             with open(os.devnull, "wb") as fnull:
-                remotes = str(
-                    subprocess.check_output(["git", "remote", "-v"], stderr=fnull, cwd=source_dir),  # noqa: S603
-                    encoding="utf-8",
-                )
+                try:
+                    output = subprocess.check_output(["git", "remote", "-v"], stderr=fnull, cwd=source_dir),  # noqa: S603
+                except:
+                    return None
+                remotes = str(output, encoding="utf-8")
             searches = [
                 r"origin\tgit@github\.([\w.-]+):([\w-]+)/([\w-]+)\.git \(\w+\)",
                 r"origin\thttps://github\.([\w.-]+)/([\w-]+)/([\w-]+)\.git \(\w+\)",
